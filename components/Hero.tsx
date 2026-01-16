@@ -195,7 +195,7 @@ const Hero: React.FC = () => {
         {/* Image Container */}
         <div className="w-[480px] overflow-hidden rounded-sm shadow-2xl bg-gray-200 dark:bg-gray-800 relative">
              <img 
-                src="../public/assets/rohit_doodle_v1.png"
+                src="/assets/rohit_doodle_v1.png"
                 alt="Rohit Tulsyani" 
                 className="w-full h-full object-cover filter contrast-125 brightness-90 grayscale-[20%]" 
              />
