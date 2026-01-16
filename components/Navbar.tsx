@@ -82,7 +82,7 @@ const Navbar: React.FC = () => {
               onClick={() => scrollTo('chat')}
               className="ml-2 font-sans font-bold text-[10px] lg:text-xs border border-ink/20 px-3 lg:px-5 py-2 uppercase tracking-widest hover:bg-ink hover:text-white dark:hover:bg-white dark:hover:text-black transition-all rounded-full whitespace-nowrap"
             >
-              Rohit AI Assistant
+              Rohit's AI Twin
             </button>
           </div>
 

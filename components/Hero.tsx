@@ -12,8 +12,8 @@ interface DesktopItem {
 }
 
 const INITIAL_ITEMS: DesktopItem[] = [
-  { id: '1', type: 'image', x: 50, y: 50, zIndex: 10, rotation: 0 },
-  { id: '2', type: 'music', x: 65, y: 35, zIndex: 20, rotation: 0 },
+  { id: '1', type: 'image', x: 50, y: 43, zIndex: 10, rotation: 0 },
+  { id: '2', type: 'music', x: 75, y: 22, zIndex: 20, rotation: 0 },
   { id: '3', type: 'dictionary', x: 35, y: 65, zIndex: 30, rotation: 0 },
   { id: '4', type: 'alert', x: 25, y: 25, zIndex: 40, rotation: 0 },
   { id: '5', type: 'finder', x: 75, y: 75, zIndex: 15, rotation: 0 },
@@ -193,14 +193,14 @@ const Hero: React.FC = () => {
         </div>
 
         {/* Image Container */}
-        <div className="w-full h-full overflow-hidden rounded-sm shadow-2xl bg-gray-200 dark:bg-gray-800 relative">
+        <div className="w-[480px] overflow-hidden rounded-sm shadow-2xl bg-gray-200 dark:bg-gray-800 relative">
              <img 
-                src="/assets/rohit_doodle_v1.png"
+                src="../public/assets/rohit_doodle_v1.png"
                 alt="Rohit Tulsyani" 
                 className="w-full h-full object-cover filter contrast-125 brightness-90 grayscale-[20%]" 
              />
              <div className="absolute bottom-4 left-4 bg-black/60 dark:bg-black/80 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-mono">
-                rohit_doodle_v1.png
+                tamanna_tulsyani.png
              </div>
         </div>
 
