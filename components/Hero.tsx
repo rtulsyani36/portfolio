@@ -90,19 +90,23 @@ const Hero: React.FC = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 opacity-20 dark:opacity-10"></div>
       
       <div className="relative p-6 flex flex-col items-center">
-        <div className="w-32 h-32 rounded-lg shadow-xl mb-6 bg-black flex items-center justify-center overflow-hidden">
-             <span className="font-display font-black text-4xl text-white">RT</span>
+        <div className="w-32 h-32 rounded-lg shadow-xl mb-6 bg-black flex items-center justify-center overflow-hidden relative">
+             <img 
+                src="/assets/kendrick damn.webp" 
+                alt="Album Art" 
+                className="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-700" 
+             />
         </div>
-        <h3 className="font-sans font-bold text-lg text-black dark:text-white">Creative Flow.mp3</h3>
-        <p className="font-sans text-sm text-gray-500 dark:text-gray-400 mb-6">Rohit Tulsyani</p>
+        <h3 className="font-sans font-bold text-lg text-black dark:text-white">DNA.</h3>
+        <p className="font-sans text-sm text-gray-500 dark:text-gray-400 mb-6">Kendrick Lamar</p>
         
         {/* Progress */}
         <div className="w-full h-1 bg-gray-300 dark:bg-gray-700 rounded-full mb-2 overflow-hidden">
-            <div className="w-2/3 h-full bg-mac-blue"></div>
+            <div className="w-1/5 h-full bg-mac-blue"></div>
         </div>
         <div className="w-full flex justify-between text-[10px] font-mono text-gray-400 mb-6">
-            <span>2:42</span>
-            <span>-1:21</span>
+            <span>0:27</span>
+            <span>-2:38</span>
         </div>
 
         {/* Controls */}
@@ -206,7 +210,7 @@ const MainImage = () => {
         {/* Image Container */}
         <div className="w-[480px] overflow-hidden rounded-sm shadow-2xl bg-gray-200 dark:bg-gray-800 relative">
              <img 
-                src="/assets/rohit_doodle_v1.png"
+                src="/assets/rohit_doodle_v1.webp"
                 alt="Rohit Tulsyani" 
                 className="w-full h-full object-cover filter contrast-125 brightness-90 grayscale-[20%]" 
              />

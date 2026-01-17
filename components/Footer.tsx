@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
             
             {/* Primary CTA: Schedule Call */}
             <a 
-                href="mailto:rtulsyani36@gmail.com?subject=Schedule%20a%20Call" 
+                href="https://cal.id/rohit-tulsyani" 
                 className="px-10 py-5 bg-ink dark:bg-white text-white dark:text-black font-display font-bold text-lg uppercase tracking-wider hover:bg-hyper-orange hover:text-white dark:hover:bg-hyper-orange dark:hover:text-white hover:scale-105 transition-all duration-300 rounded-lg shadow-xl"
             >
                 Schedule a Call

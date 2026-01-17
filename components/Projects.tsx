@@ -231,11 +231,16 @@ const FinderWindow: React.FC<{
 
             {/* Preview Modal (Image, Video, or YouTube) */}
             {previewFile && (
-                <div className="absolute inset-0 z-[110] flex items-center justify-center p-4 md:p-8 animate-fade-in-fast">
+                <div className="absolute inset-0 z-[110] flex items-center justify-center p-4 md:p-8 animate-fade-in-fast pointer-events-auto">
                     <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setPreviewFile(null)}></div>
-                    <div className="relative bg-[#2d2d2d] rounded-lg shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] flex flex-col max-h-full max-w-5xl overflow-hidden animate-scale-up-center border border-white/10 w-full md:w-auto">
+                    <div className={`
+                        relative bg-[#2d2d2d] rounded-lg shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] flex flex-col overflow-hidden animate-scale-up-center border border-white/10 
+                        ${(previewFile.type === 'video' || previewFile.type === 'youtube') 
+                            ? 'w-[95%] md:w-[85%] max-w-6xl' 
+                            : 'w-full md:w-auto max-w-5xl max-h-[90vh]'}
+                    `}>
                         {/* Preview Header */}
-                        <div className="h-10 bg-[#3a3a3a] border-b border-black/50 flex items-center justify-between px-4 text-gray-300">
+                        <div className="h-10 bg-[#3a3a3a] border-b border-black/50 flex items-center justify-between px-4 text-gray-300 flex-shrink-0">
                             <div className="flex gap-2">
                                 <button onClick={() => setPreviewFile(null)} className="w-3 h-3 rounded-full bg-[#FF5F57] group relative">
                                     <span className="opacity-0 group-hover:opacity-100 absolute inset-0 flex items-center justify-center text-[8px] text-black font-bold">✕</span>
@@ -250,13 +255,13 @@ const FinderWindow: React.FC<{
                         </div>
                         
                         {/* Content */}
-                        <div className={`flex-1 overflow-auto bg-black flex items-center justify-center p-1 min-w-[300px] min-h-[200px] ${previewFile.type === 'youtube' ? 'aspect-video w-full' : ''}`}>
+                        <div className={`flex-1 overflow-hidden bg-black flex items-center justify-center p-0 ${(previewFile.type === 'youtube' || previewFile.type === 'video') ? 'aspect-video w-full' : 'min-w-[300px] min-h-[200px] p-1'}`}>
                             {previewFile.type === 'video' ? (
-                                <video
+                                <video 
                                     src={previewFile.url} 
                                     controls 
                                     autoPlay 
-                                    className="max-w-full max-h-[80vh] shadow-2xl outline-none"
+                                    className="w-full h-full object-contain outline-none"
                                 >
                                     Your browser does not support the video tag.
                                 </video>

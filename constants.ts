@@ -158,12 +158,12 @@ export const PROJECTS: Project[] = [
     tags: ["Strategy", "Growth", "Management",],
     image: "/assets/projects/social-manager/thumb.svg",
     gallery: [
-         { url: "/assets/projects/social-manager/tenant-pay.png", name: "Tenant_Pay_Instagram.png", type: 'image' },
-         { url: "/assets/projects/social-manager/beautiful-tourist.png", name: "Beautiful_Tourist_Instagram.png", type: 'image' },
-         { url: "/assets/projects/social-manager/ninja-studio.png", name: "Ninja_Studio_LinkedIn.png", type: 'image' },
-         { url: "/assets/projects/social-manager/goklaim.png", name: "GoKlaim_Brand_LinkedIn.png", type: 'image' },
-         { url: "/assets/projects/social-manager/quizzy.png", name: "Quizzy_Growth_LinkedIn.png", type: 'image' },
-         { url: "/assets/projects/social-manager/employer-lens.png", name: "Employer_Lens_Facebook.png", type: 'image' },
+         { url: "/assets/projects/social-manager/tenant-pay.webp", name: "Tenant_Pay_Instagram", type: 'image' },
+         { url: "/assets/projects/social-manager/beautiful-tourist.webp", name: "Beautiful_Tourist_Instagram", type: 'image' },
+         { url: "/assets/projects/social-manager/ninja-studio.webp", name: "Ninja_Studio_LinkedIn", type: 'image' },
+         { url: "/assets/projects/social-manager/goklaim.webp", name: "GoKlaim_Brand_LinkedIn", type: 'image' },
+         { url: "/assets/projects/social-manager/quizzy.webp", name: "Quizzy_Growth_LinkedIn", type: 'image' },
+         { url: "/assets/projects/social-manager/employer-lens.webp", name: "Employer_Lens_Facebook", type: 'image' },
         ],
     link: "#"
   },
@@ -173,19 +173,19 @@ export const PROJECTS: Project[] = [
     tags: ["Photoshop", "Illustrator", "GenAI"],
     image: "/assets/projects/freelance/thumb.svg",
     gallery: [
-        { url: "/assets/projects/graphic design/album cover art.png", name: "album cover art.png", type: 'image' },
-        { url: "/assets/projects/graphic design/music video thumbnail.png", name: "music video thumbnail.png", type: 'image' },
-        { url: "/assets/projects/graphic design/gaming montage thumbnail.jpg", name: "gaming montage thumbnail.png", type: 'image' },
-        { url: "/assets/projects/graphic design/streetwear brand.png", name: "streetwear brand.png", type: 'image' },
-        { url: "/assets/projects/graphic design/streetwear brand2.png", name: "streetwear brand2.png", type: 'image' },
-        { url: "/assets/projects/graphic design/blog logo.png", name: "blog logo.png", type: 'image' },
-        { url: "/assets/projects/graphic design/sales marketing agency.png", name: "sales marketing agency.png", type: 'image' },
-        { url: "/assets/projects/graphic design/ISL school logo.png", name: "ISL school logo.png", type: 'image' },
-        { url: "/assets/projects/graphic design/literary society.jpg", name: "literary society.jpg", type: 'image' },
-        { url: "/assets/projects/graphic design/tshirt design1.jpg", name: "tshirt design1.jpg", type: 'image' },
-        { url: "/assets/projects/graphic design/tshirt design2.png", name: "tshirt design2.png", type: 'image' },
-        { url: "/assets/projects/graphic design/restaurant logo.jpg", name: "restaurant logo.jpg", type: 'image' },
-        { url: "/assets/projects/graphic design/etsy shop.JPG", name: "etsy shop.JPG", type: 'image' },
+        { url: "/assets/projects/graphic design/album cover art.webp", name: "album cover art.png", type: 'image' },
+        { url: "/assets/projects/graphic design/music video thumbnail.webp", name: "music video thumbnail.png", type: 'image' },
+        { url: "/assets/projects/graphic design/gaming montage thumbnail.webp", name: "gaming montage thumbnail.png", type: 'image' },
+        { url: "/assets/projects/graphic design/streetwear brand.webp", name: "streetwear brand.png", type: 'image' },
+        { url: "/assets/projects/graphic design/streetwear brand2.webp", name: "streetwear brand2.png", type: 'image' },
+        { url: "/assets/projects/graphic design/blog logo.webp", name: "blog logo.png", type: 'image' },
+        { url: "/assets/projects/graphic design/sales marketing agency.webp", name: "sales marketing agency.png", type: 'image' },
+        { url: "/assets/projects/graphic design/ISL school logo.webp", name: "ISL school logo.png", type: 'image' },
+        { url: "/assets/projects/graphic design/literary society.webp", name: "literary society.png", type: 'image' },
+        { url: "/assets/projects/graphic design/tshirt design1.webp", name: "tshirt design1.jpg", type: 'image' },
+        { url: "/assets/projects/graphic design/tshirt design2.webp", name: "tshirt design2.png", type: 'image' },
+        { url: "/assets/projects/graphic design/restaurant logo.webp", name: "restaurant logo.png", type: 'image' },
+        { url: "/assets/projects/graphic design/etsy shop.webp", name: "etsy shop.png", type: 'image' },
     
       ],
     link: "#"
@@ -224,26 +224,32 @@ export const PROJECTS: Project[] = [
     image: "/assets/projects/stealth/thumb.svg",
     gallery: [
         { 
-            url: "/assets/projects/videos/company infomercial.mp4", 
+             // Placeholder YouTube Embed URL - Replace with actual video ID
+            url: "https://www.youtube.com/embed/YMOfCDN78MU?autoplay=1", 
             name: "company infomercial.mp4", 
-            type: 'video' 
+            type: 'youtube',
+            thumbnail: "/assets/projects/videos/company infomercial.webp" // You can set specific thumbnails
         },
         { 
              // Placeholder YouTube Embed URL - Replace with actual video ID
             url: "https://www.youtube.com/embed/FfqNNcqyoeE?autoplay=1", 
-            name: "mobile app tutorial", 
+            name: "mobile app tutorial.mp4", 
             type: 'youtube',
-            thumbnail: "/assets/projects/videos/mobile app tutorial thumbnail.jpg" // You can set specific thumbnails
+            thumbnail: "/assets/projects/videos/mobile app tutorial thumbnail.webp" // You can set specific thumbnails
         },
         { 
-            url: "/assets/projects/videos/ai video doctor.mp4", 
-            name: "ai video doctor.mp4", 
-            type: 'video' 
+             // Placeholder YouTube Embed URL - Replace with actual video ID
+            url: "https://www.youtube.com/embed/iz7pfESGQPI?autoplay=1", 
+            name: "ai doctor reel.mp4", 
+            type: 'youtube',
+            thumbnail: "/assets/projects/videos/ai video doctor.webp" // You can set specific thumbnails
         },
         { 
-            url: "/assets/projects/videos/ai video doctor2.mp4", 
-            name: "ai video doctor.mp4", 
-            type: 'video' 
+             // Placeholder YouTube Embed URL - Replace with actual video ID
+            url: "https://www.youtube.com/embed/_Ma1_JROG1g?autoplay=1", 
+            name: "ai doctor reel2.mp4", 
+            type: 'youtube',
+            thumbnail: "/assets/projects/videos/ai video doctor2.webp" // You can set specific thumbnails
         },
         { 
             url: "/assets/projects/videos/youtube logo.png", 
