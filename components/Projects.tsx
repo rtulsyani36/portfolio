@@ -1,12 +1,12 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PROJECTS } from '../constants';
 import { Project, ProjectFile } from '../types';
 
 const FolderIcon: React.FC<{ 
     colorClass: string; 
     label: string; 
-    onClick: () => void;
+    onClick: (e: React.MouseEvent) => void;
     delay: number;
 }> = ({ colorClass, label, onClick, delay }) => (
     <div 
@@ -33,8 +33,39 @@ const FolderIcon: React.FC<{
     </div>
 );
 
-const FinderWindow: React.FC<{ project: Project; onClose: () => void }> = ({ project, onClose }) => {
+const FinderWindow: React.FC<{ 
+    project: Project; 
+    onClose: () => void;
+    originRect: DOMRect | null; 
+}> = ({ project, onClose, originRect }) => {
     const [previewFile, setPreviewFile] = useState<ProjectFile | null>(null);
+    const [isClosing, setIsClosing] = useState(false);
+    const [exitStyle, setExitStyle] = useState<React.CSSProperties>({});
+
+    useEffect(() => {
+        if (originRect) {
+            // Calculate vector from Center Screen to Center Folder
+            const viewportCenter = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+            const folderCenter = { 
+                x: originRect.left + originRect.width / 2, 
+                y: originRect.top + originRect.height / 2 
+            };
+
+            const deltaX = folderCenter.x - viewportCenter.x;
+            const deltaY = folderCenter.y - viewportCenter.y;
+
+            setExitStyle({
+                '--genie-x': `${deltaX}px`,
+                '--genie-y': `${deltaY}px`,
+            } as React.CSSProperties);
+        }
+    }, [originRect]);
+
+    const handleClose = () => {
+        setIsClosing(true);
+        // Wait for animation to finish before actual close
+        setTimeout(onClose, 500); 
+    };
 
     const handleFileClick = (file: ProjectFile) => {
         if (file.type === 'link' && file.externalLink) {
@@ -45,17 +76,26 @@ const FinderWindow: React.FC<{ project: Project; onClose: () => void }> = ({ pro
     };
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 pointer-events-auto">
             {/* Backdrop */}
-            <div className="absolute inset-0 bg-black/20 backdrop-blur-sm animate-fade-in" onClick={onClose}></div>
+            <div 
+                className={`absolute inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-500 ${isClosing ? 'opacity-0' : 'opacity-100'}`} 
+                onClick={handleClose}
+            ></div>
             
             {/* Window */}
-            <div className="relative w-full max-w-5xl h-[80vh] bg-[#f5f5f7]/90 dark:bg-[#1e1e1e]/90 backdrop-blur-2xl rounded-xl shadow-2xl border border-white/40 dark:border-white/10 flex flex-col overflow-hidden animate-scale-up-center">
+            <div 
+                className={`
+                    relative w-full max-w-5xl h-[80vh] bg-[#f5f5f7]/90 dark:bg-[#1e1e1e]/90 backdrop-blur-2xl rounded-xl shadow-2xl border border-white/40 dark:border-white/10 flex flex-col overflow-hidden 
+                    ${isClosing ? 'animate-genie-exit' : 'animate-scale-up-center'}
+                `}
+                style={isClosing ? exitStyle : {}}
+            >
                 
                 {/* Toolbar */}
                 <div className="h-12 bg-gray-200/50 dark:bg-white/5 border-b border-gray-300/50 dark:border-white/10 flex items-center px-4 justify-between flex-shrink-0">
                     <div className="flex gap-2">
-                        <button onClick={onClose} className="w-3 h-3 rounded-full bg-[#FF5F57] border border-black/10 hover:bg-[#FF5F57]/80 flex items-center justify-center group">
+                        <button onClick={handleClose} className="w-3 h-3 rounded-full bg-[#FF5F57] border border-black/10 hover:bg-[#FF5F57]/80 flex items-center justify-center group">
                             <span className="opacity-0 group-hover:opacity-100 text-[8px] font-bold text-black/50">x</span>
                         </button>
                         <button className="w-3 h-3 rounded-full bg-[#FEBC2E] border border-black/10 hover:bg-[#FEBC2E]/80"></button>
@@ -130,7 +170,7 @@ const FinderWindow: React.FC<{ project: Project; onClose: () => void }> = ({ pro
                                          {/* IMAGE TYPE */}
                                          {file.type === 'image' && <img src={file.url} alt={file.name} className="w-full h-full object-cover rounded-sm pointer-events-none" />}
                                          
-                                         {/* VIDEO TYPE */}
+                                         {/* VIDEO TYPE (Raw) */}
                                          {file.type === 'video' && (
                                             <div className="relative w-full h-full bg-black rounded-sm overflow-hidden flex items-center justify-center">
                                                  <div className="absolute inset-0 opacity-50 bg-cover bg-center" style={{ backgroundImage: `url('/assets/projects/gallery-placeholder.svg')` }}></div>
@@ -140,10 +180,29 @@ const FinderWindow: React.FC<{ project: Project; onClose: () => void }> = ({ pro
                                                  <div className="absolute bottom-1 right-1 px-1 py-0.5 bg-black/60 text-[8px] text-white font-mono rounded">MP4</div>
                                             </div>
                                          )}
+
+                                         {/* YOUTUBE TYPE */}
+                                         {file.type === 'youtube' && (
+                                            <div className="relative w-full h-full bg-black rounded-sm overflow-hidden flex items-center justify-center group/file">
+                                                 {/* Thumbnail */}
+                                                 <img 
+                                                    src={file.thumbnail || '/assets/projects/gallery-placeholder.svg'} 
+                                                    alt={file.name}
+                                                    className="w-full h-full object-cover opacity-80 group-hover/file:opacity-60 transition-opacity"
+                                                 />
+                                                 {/* Play Button Overlay */}
+                                                 <div className="absolute inset-0 flex items-center justify-center">
+                                                     <div className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center shadow-lg transform group-hover/file:scale-110 transition-transform">
+                                                        <svg className="w-4 h-4 text-white fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                                     </div>
+                                                 </div>
+                                                 <div className="absolute bottom-1 right-1 px-1 py-0.5 bg-black/60 text-[8px] text-white font-mono rounded">YT</div>
+                                            </div>
+                                         )}
                                          
                                          {/* LINK TYPE */}
                                          {file.type === 'link' && (
-                                            <div className="relative w-full h-full bg-gray-50 dark:bg-white/5 rounded-sm overflow-hidden flex items-center justify-center group/file">
+                                            <div className="relative w-full h-full bg-gray-5 dark:bg-white/5 rounded-sm overflow-hidden flex items-center justify-center group/file">
                                                  <img src={file.url} alt={file.name} className="w-full h-full object-cover pointer-events-none opacity-100 group-hover/file:opacity-90 transition-opacity" />
                                                  
                                                  {/* Corner Indicator */}
@@ -170,11 +229,11 @@ const FinderWindow: React.FC<{ project: Project; onClose: () => void }> = ({ pro
                 </div>
             </div>
 
-            {/* Preview Modal (Image or Video) */}
+            {/* Preview Modal (Image, Video, or YouTube) */}
             {previewFile && (
                 <div className="absolute inset-0 z-[110] flex items-center justify-center p-4 md:p-8 animate-fade-in-fast">
                     <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setPreviewFile(null)}></div>
-                    <div className="relative bg-[#2d2d2d] rounded-lg shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] flex flex-col max-h-full max-w-5xl overflow-hidden animate-scale-up-center border border-white/10">
+                    <div className="relative bg-[#2d2d2d] rounded-lg shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] flex flex-col max-h-full max-w-5xl overflow-hidden animate-scale-up-center border border-white/10 w-full md:w-auto">
                         {/* Preview Header */}
                         <div className="h-10 bg-[#3a3a3a] border-b border-black/50 flex items-center justify-between px-4 text-gray-300">
                             <div className="flex gap-2">
@@ -185,15 +244,15 @@ const FinderWindow: React.FC<{ project: Project; onClose: () => void }> = ({ pro
                                 <button className="w-3 h-3 rounded-full bg-[#28C840]"></button>
                             </div>
                             <span className="text-xs font-medium opacity-70 flex items-center gap-2">
-                                {previewFile.type === 'video' ? 'QuickTime Player' : 'Preview'} — {previewFile.name}
+                                {previewFile.type === 'video' || previewFile.type === 'youtube' ? 'QuickTime Player' : 'Preview'} — {previewFile.name}
                             </span>
                             <div className="w-10"></div>
                         </div>
                         
                         {/* Content */}
-                        <div className="flex-1 overflow-auto bg-black flex items-center justify-center p-1 min-w-[300px] min-h-[200px]">
+                        <div className={`flex-1 overflow-auto bg-black flex items-center justify-center p-1 min-w-[300px] min-h-[200px] ${previewFile.type === 'youtube' ? 'aspect-video w-full' : ''}`}>
                             {previewFile.type === 'video' ? (
-                                <video 
+                                <video
                                     src={previewFile.url} 
                                     controls 
                                     autoPlay 
@@ -201,6 +260,17 @@ const FinderWindow: React.FC<{ project: Project; onClose: () => void }> = ({ pro
                                 >
                                     Your browser does not support the video tag.
                                 </video>
+                                ) : previewFile.type === 'youtube' ? (
+                                <iframe 
+                                    width="100%" 
+                                    height="100%" 
+                                    src={previewFile.url} 
+                                    title={previewFile.name} 
+                                    frameBorder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowFullScreen
+                                    className="w-full h-full shadow-2xl"
+                                ></iframe>
                             ) : (
                                 <img 
                                     src={previewFile.url} 
@@ -218,6 +288,7 @@ const FinderWindow: React.FC<{ project: Project; onClose: () => void }> = ({ pro
 
 const Projects: React.FC = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [originRect, setOriginRect] = useState<DOMRect | null>(null);
 
   // Gradient presets for folders to match reference vibe
   const folderColors = [
@@ -226,6 +297,12 @@ const Projects: React.FC = () => {
       'bg-gradient-to-br from-orange-400 to-pink-500',   // UI/UX
       'bg-gradient-to-br from-emerald-400 to-teal-500',  // Video (Changed to Green/Teal)
   ];
+
+  const handleFolderClick = (project: Project, e: React.MouseEvent) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      setOriginRect(rect);
+      setSelectedProject(project);
+  };
 
   return (
     <section id="work" className="py-32 bg-paper relative overflow-hidden min-h-screen flex flex-col justify-center">
@@ -252,13 +329,13 @@ const Projects: React.FC = () => {
                     key={idx}
                     label={project.title}
                     colorClass={folderColors[idx % folderColors.length]}
-                    onClick={() => setSelectedProject(project)}
+                    onClick={(e) => handleFolderClick(project, e)}
                     delay={idx * 0.1}
                 />
             ))}
         </div>
 
-        {/* Subtle Status Bar (Replaces Fun Fact Button) */}
+        {/* Subtle Status Bar */}
         <div className="mt-24 flex justify-center opacity-60 hover:opacity-100 transition-opacity duration-300">
              <div className="flex items-center gap-6 px-4 py-2 bg-gray-100 dark:bg-white/10 rounded-full border border-gray-200 dark:border-white/5 backdrop-blur-sm text-[10px] font-mono text-gray-500 dark:text-gray-400">
                  <div className="flex items-center gap-2">
@@ -276,25 +353,41 @@ const Projects: React.FC = () => {
       {selectedProject && (
           <FinderWindow 
             project={selectedProject} 
+            originRect={originRect}
             onClose={() => setSelectedProject(null)} 
           />
       )}
 
-      {/* Add keyframe styles for animations if not present in Tailwind config */}
+      {/* Styles */}
       <style>{`
         @keyframes scale-up-center {
-            0% { transform: scale(0.9); opacity: 0; }
+            0% { transform: scale(0.8); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
-        @keyframes fade-in {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
+        @keyframes genie-exit {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+                border-radius: 0.75rem;
+            }
+            100% {
+                transform: translate(var(--genie-x), var(--genie-y)) scale(0);
+                opacity: 0;
+                border-radius: 50%;
+            }
         }
         .animate-scale-up-center {
-            animation: scale-up-center 0.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+            animation: scale-up-center 0.3s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
         }
-        .animate-fade-in {
-            animation: fade-in 0.2s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+        .animate-genie-exit {
+            animation: genie-exit 0.5s cubic-bezier(0.7, 0, 0.3, 1) forwards;
+        }
+        .animate-fade-in-fast {
+            animation: fadeIn 0.2s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
       `}</style>
     </section>

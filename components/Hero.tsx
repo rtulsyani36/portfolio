@@ -12,11 +12,11 @@ interface DesktopItem {
 }
 
 const INITIAL_ITEMS: DesktopItem[] = [
-  { id: '1', type: 'image', x: 50, y: 43, zIndex: 10, rotation: 0 },
-  { id: '2', type: 'music', x: 75, y: 22, zIndex: 20, rotation: 0 },
-  { id: '3', type: 'dictionary', x: 35, y: 65, zIndex: 30, rotation: 0 },
-  { id: '4', type: 'alert', x: 25, y: 25, zIndex: 40, rotation: 0 },
-  { id: '5', type: 'finder', x: 75, y: 75, zIndex: 15, rotation: 0 },
+  { id: '1', type: 'image', x: 48, y: 43, zIndex: 10, rotation: 0 },
+  { id: '2', type: 'music', x: 73, y: 22, zIndex: 20, rotation: 0 },
+  { id: '3', type: 'dictionary', x: 28, y: 55, zIndex: 30, rotation: 0 },
+  { id: '4', type: 'alert', x: 33, y: 10, zIndex: 40, rotation: 0 },
+  { id: '5', type: 'finder', x: 68, y: 65, zIndex: 15, rotation: 0 },
 ];
 
 const Hero: React.FC = () => {
@@ -175,20 +175,31 @@ const Hero: React.FC = () => {
     </div>
   );
 
-  const MainImage = () => (
+const MainImage = () => {
+     // Customize the padding size of the blue selection box (in pixels)
+     // Increase this value to make the rectangle larger.
+     const paddingSize = 24; 
+    
+     return (
      <div className="w-[300px] md:w-[400px] aspect-[4/5] relative group">
         
-      
-
-        {/* Selection Rectangle Effect */}
-        <div className="absolute -inset-4 border border-mac-blue bg-mac-blue/10 dark:bg-mac-blue/20 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity z-40 flex flex-col justify-between">
-            <div className="flex justify-between p-1">
-                 <div className="w-1.5 h-1.5 bg-white border border-mac-blue"></div>
-                 <div className="w-1.5 h-1.5 bg-white border border-mac-blue"></div>
+        {/* Selection Rectangle Effect - Behind Image */}
+        <div 
+            className="absolute border-2 border-mac-blue bg-mac-blue/5 dark:bg-mac-blue/10 pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-300 z-0 rounded-xl flex flex-col justify-between"
+            style={{ 
+                top: `-${paddingSize}px`, 
+                bottom: `-${paddingSize}px`, 
+                left: `-${paddingSize}px`, 
+                right: `-104px` 
+            }}
+        >
+          <div className="flex justify-between p-1">
+                 <div className="w-1.5 h-1.5 bg-white border border-mac-blue shadow-sm"></div>
+                 <div className="w-1.5 h-1.5 bg-white border border-mac-blue shadow-sm"></div>
             </div>
             <div className="flex justify-between p-1">
-                 <div className="w-1.5 h-1.5 bg-white border border-mac-blue"></div>
-                 <div className="w-1.5 h-1.5 bg-white border border-mac-blue"></div>
+                 <div className="w-1.5 h-1.5 bg-white border border-mac-blue shadow-sm"></div>
+                 <div className="w-1.5 h-1.5 bg-white border border-mac-blue shadow-sm"></div>
             </div>
         </div>
 
@@ -200,7 +211,7 @@ const Hero: React.FC = () => {
                 className="w-full h-full object-cover filter contrast-125 brightness-90 grayscale-[20%]" 
              />
              <div className="absolute bottom-4 left-4 bg-black/60 dark:bg-black/80 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-mono">
-                tamanna_tulsyani.png
+                rohit_tulsyani.png
              </div>
         </div>
 
@@ -212,7 +223,7 @@ const Hero: React.FC = () => {
              <span className="bg-mac-blue text-white text-[10px] px-1.5 py-0.5 rounded ml-4">Rohit</span>
         </div>
      </div>
-  );
+  )};
 
   const renderItem = (type: WindowType) => {
     switch (type) {

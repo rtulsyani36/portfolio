@@ -1,9 +1,10 @@
+
 import React from 'react';
 import { SKILL_CATEGORIES } from '../constants';
 
 const Skills: React.FC = () => {
   // Map gradients to the categories
-  // Order: Design, Strategy, Management, Technical
+  // Order: Design, Strategy, Management, Technical, Certificates
   const categoryStyles = [
     {
       // Design - Warm creative vibes
@@ -52,6 +53,18 @@ const Skills: React.FC = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
         </svg>
       )
+    },
+    {
+      // Certificates - Gold/Award vibes
+      gradient: "from-yellow-400 via-orange-500 to-red-500",
+      lightBg: "bg-yellow-50/50 dark:bg-yellow-900/20",
+      border: "border-yellow-100 dark:border-yellow-500/30",
+      textGradient: "bg-gradient-to-r from-yellow-600 to-red-600 dark:from-yellow-400 dark:to-red-400",
+      icon: (
+        <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138z" />
+        </svg>
+      )
     }
   ];
 
@@ -76,18 +89,21 @@ const Skills: React.FC = () => {
             </p>
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        {/* Cards Grid - Flex Layout for "3 top, 2 centered bottom" */}
+        <div className="flex flex-wrap justify-center gap-6 md:gap-8">
             {SKILL_CATEGORIES.map((category, idx) => {
                 const style = categoryStyles[idx % categoryStyles.length];
                 
                 return (
-                    <div key={idx} className="group relative">
-                        {/* Hover Glow Effect - Toned Down */}
+                    <div 
+                        key={idx} 
+                        className="w-full md:w-[45%] lg:w-[30%] group relative"
+                    >
+                        {/* Hover Glow Effect */}
                         <div className={`absolute -inset-0.5 bg-gradient-to-br ${style.gradient} rounded-2xl opacity-0 group-hover:opacity-40 transition duration-500 blur-md group-hover:blur-md`}></div>
                         
                         {/* Card Body */}
-                        <div className="relative h-full bg-white/60 dark:bg-zinc-900/40 backdrop-blur-xl p-6 rounded-xl border border-white/60 dark:border-white/10 shadow-glass transition-all duration-500 group-hover:-translate-y-2 group-hover:bg-white/80 dark:group-hover:bg-zinc-900/60">
+                        <div className="relative h-full bg-white/60 dark:bg-zinc-900/40 backdrop-blur-xl p-6 rounded-xl border border-white/60 dark:border-white/10 shadow-glass transition-all duration-500 group-hover:-translate-y-2 group-hover:bg-white/80 dark:group-hover:bg-zinc-900/60 flex flex-col">
                             
                             {/* Card Header */}
                             <div className="flex items-center gap-3 mb-6">
@@ -105,7 +121,7 @@ const Skills: React.FC = () => {
                             </div>
 
                             {/* Skills Chips */}
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-wrap gap-2 mt-auto">
                                 {category.skills.map((skill, sIdx) => (
                                     <div 
                                         key={skill}

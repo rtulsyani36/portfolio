@@ -20,7 +20,8 @@ export interface SkillCategory {
 export interface ProjectFile {
   url: string;
   name: string;
-  type: 'image' | 'video' | 'link';
+  type: 'image' | 'video' | 'link' | 'youtube';
+  thumbnail?: string; // Optional thumbnail for video/youtube types
   externalLink?: string; // Only required if type is 'link'
 }
 

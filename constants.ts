@@ -130,97 +130,126 @@ export const EXPERIENCES: Experience[] = [
 export const SKILL_CATEGORIES: SkillCategory[] = [
   {
     title: "Design",
-    skills: ["Adobe Photoshop", "Adobe Illustrator", "Figma", "Video Editing (Premiere)", "Visual Identity"]
-  },
-  {
-    title: "Strategy",
-    skills: ["Content Ops", "SEO Research", "Growth Hacking", "Data Analysis", "Market Research"]
+    skills: ["Brand Identity", "Typography", "Visual Assets", "AI-Assisted Design", "High-CTR Packaging"]
   },
   {
     title: "Management",
-    skills: ["Client Relations", "Team Leadership", "Pipeline Optimization", "Project Management", "Agile Workflows"]
+    skills: ["Client Relations", "Team Leadership", "Pipeline Optimization", "Project Management", "Quality Assurance", "Hubspot - CRM"]
   },
   {
     title: "Technical",
-    skills: ["AI Automation (N8N)", "System Architecture", "Prompt Engineering", "Full Stack (React/Node)", "Python Scripting"]
+    skills: ["Workflow Automation", "GenAI Integration", "SEO", "Prompt Engineering", "Data Operations", "Hubspot - CRM", "Publer - CMS"]
+  },
+  {
+    title: "Marketing",
+    skills: ["Content Strategy", "Platform Growth","Meta & Google Ads", "Campaign Planning", "Product-Led Content", "Market Intelligence", "Research & Analysis", "Publer - CMS"]
+  },
+  {
+    title: "Certificate Courses",
+    skills: ["Adobe Illustrator (2018)", "Adobe Photoshop (2018)", "Adobe InDesign (2018)", "CorelDraw (2018)", "Digital Marketing (2023)", "Prompt Engineering (2024)"
+    ]
   }
 ];
 
 export const PROJECTS: Project[] = [
   {
     title: "Social Media Profiles",
-    description: "Managed full social media execution for SaaS, FinTech, and Medical Tourism clients. Includes strategy decks, post designs, and analytics reports.",
-    tags: ["Strategy", "Growth", "Management"],
+    description: "Managed full social media execution for high-growth SaaS, FinTech, MedTour, EdTech, Agency clients and profiles. Bridging the gap between business goals and creative content.",
+    tags: ["Strategy", "Growth", "Management",],
     image: "/assets/projects/social-manager/thumb.svg",
     gallery: [
-         { url: "/assets/projects/social-manager/ninja-studio.png", name: "Ninja_Studio_Feed.png", type: 'image' },
-         { url: "/assets/projects/social-manager/tenant-pay.png", name: "Tenant_Pay_Campaign.png", type: 'image' },
-         { url: "/assets/projects/social-manager/beautiful-tourist.png", name: "Medical_Tourism_Ad.png", type: 'image' },
-         { url: "/assets/projects/social-manager/goklaim.png", name: "GoKlaim_Brand_Kit.png", type: 'image' },
-         { url: "/assets/projects/social-manager/quizzy.png", name: "Quizzy_Growth_Stats.png", type: 'image' }
-    ],
+         { url: "/assets/projects/social-manager/tenant-pay.png", name: "Tenant_Pay_Instagram.png", type: 'image' },
+         { url: "/assets/projects/social-manager/beautiful-tourist.png", name: "Beautiful_Tourist_Instagram.png", type: 'image' },
+         { url: "/assets/projects/social-manager/ninja-studio.png", name: "Ninja_Studio_LinkedIn.png", type: 'image' },
+         { url: "/assets/projects/social-manager/goklaim.png", name: "GoKlaim_Brand_LinkedIn.png", type: 'image' },
+         { url: "/assets/projects/social-manager/quizzy.png", name: "Quizzy_Growth_LinkedIn.png", type: 'image' },
+         { url: "/assets/projects/social-manager/employer-lens.png", name: "Employer_Lens_Facebook.png", type: 'image' },
+        ],
     link: "#"
   },
   {
     title: "Graphic Design",
     description: "A collection of freelance branding projects, including logos, merchandising, and social assets for diverse clients.",
-    tags: ["Photoshop", "Illustrator", "Branding"],
+    tags: ["Photoshop", "Illustrator", "GenAI"],
     image: "/assets/projects/freelance/thumb.svg",
     gallery: [
-        { url: "/assets/projects/freelance/thumb.svg", name: "Logo_Collection.svg", type: 'image' },
-        { url: "/assets/projects/gallery-placeholder.svg", name: "Merch_Design_Final.png", type: 'image' },
-        { url: "/assets/projects/gallery-placeholder.svg", name: "Social_Assets_Kit.png", type: 'image' },
-        { url: "/assets/projects/gallery-placeholder.svg", name: "Event_Poster_v3.jpg", type: 'image' }
-    ],
+        { url: "/assets/projects/graphic design/album cover art.png", name: "album cover art.png", type: 'image' },
+        { url: "/assets/projects/graphic design/music video thumbnail.png", name: "music video thumbnail.png", type: 'image' },
+        { url: "/assets/projects/graphic design/gaming montage thumbnail.jpg", name: "gaming montage thumbnail.png", type: 'image' },
+        { url: "/assets/projects/graphic design/streetwear brand.png", name: "streetwear brand.png", type: 'image' },
+        { url: "/assets/projects/graphic design/streetwear brand2.png", name: "streetwear brand2.png", type: 'image' },
+        { url: "/assets/projects/graphic design/blog logo.png", name: "blog logo.png", type: 'image' },
+        { url: "/assets/projects/graphic design/sales marketing agency.png", name: "sales marketing agency.png", type: 'image' },
+        { url: "/assets/projects/graphic design/ISL school logo.png", name: "ISL school logo.png", type: 'image' },
+        { url: "/assets/projects/graphic design/literary society.jpg", name: "literary society.jpg", type: 'image' },
+        { url: "/assets/projects/graphic design/tshirt design1.jpg", name: "tshirt design1.jpg", type: 'image' },
+        { url: "/assets/projects/graphic design/tshirt design2.png", name: "tshirt design2.png", type: 'image' },
+        { url: "/assets/projects/graphic design/restaurant logo.jpg", name: "restaurant logo.jpg", type: 'image' },
+        { url: "/assets/projects/graphic design/etsy shop.JPG", name: "etsy shop.JPG", type: 'image' },
+    
+      ],
     link: "#"
   },
   {
     title: "UI/UX Design",
-    description: "User interfaces designed for web and mobile applications. Click on the files to view the live Figma prototypes or case studies.",
-    tags: ["Figma", "Prototyping", "User Flow"],
-    image: "/assets/projects/automated-content/thumb.svg",
+    description: "User interfaces designed for web and mobile applications. Click on the files to view the live Figma prototypes or websites.",
+    tags: ["Figma", "Vibe Coding", "Asset Creation"],
+    image: "/assets/projects/ui-ux-design/thumb.svg",
     gallery: [
         { 
-            url: "/assets/projects/gallery-placeholder.svg", 
-            name: "TrustX", 
+            url: "/assets/projects/ui-ux-design/trustx.png", 
+            name: "TrustX - Crypto Wallet App", 
             type: 'link', 
             externalLink: "https://www.figma.com/proto/sGhryXhGEsfZaFvry2TiHK/TrustX?node-id=2-3&p=f&t=CP5NOEAV4UtrjpCN-1&scaling=scale-down&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=2%3A3&show-proto-sidebar=1" 
         },
         { 
-            url: "/assets/projects/gallery-placeholder.svg", 
-            name: "SaaS_Dashboard_Wireframe.url", 
+            url: "/assets/projects/ui-ux-design/dragonfly-inn.png", 
+            name: "DragonFly Inn", 
             type: 'link', 
             externalLink: "https://dragonflyinn.vercel.app/" 
         },
         { 
-            url: "/assets/projects/gallery-placeholder.svg", 
-            name: "Mobile_Banking_App.url", 
+            url: "/assets/projects/ui-ux-design/gallery-placeholder.svg", 
+            name: "This Portfolio", 
             type: 'link', 
-            externalLink: "https://www.figma.com/" 
+            externalLink: "https://rohittulsyani.vercel.app/" 
         }
     ],
     link: "#"
   },
   {
     title: "Video Editing & AI Vids",
-    description: "Commercial editing work and experimental AI video generation. Features 'AI talking head' projects and gaming highlights.",
+    description: "Commercial editing work and experimental AI video generation. Features 'AI talking head' projects and music-synced gaming highlights on my channel.",
     tags: ["Premiere Pro", "AI Video", "Motion Graphics"],
     image: "/assets/projects/stealth/thumb.svg",
     gallery: [
         { 
-            url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4", 
-            name: "AI_Talking_Head_Demo.mp4", 
+            url: "/assets/projects/videos/company infomercial.mp4", 
+            name: "company infomercial.mp4", 
             type: 'video' 
         },
         { 
-            url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4", 
-            name: "Commercial_Edit_v2.mp4", 
+             // Placeholder YouTube Embed URL - Replace with actual video ID
+            url: "https://www.youtube.com/embed/FfqNNcqyoeE?autoplay=1", 
+            name: "mobile app tutorial", 
+            type: 'youtube',
+            thumbnail: "/assets/projects/videos/mobile app tutorial thumbnail.jpg" // You can set specific thumbnails
+        },
+        { 
+            url: "/assets/projects/videos/ai video doctor.mp4", 
+            name: "ai video doctor.mp4", 
             type: 'video' 
         },
         { 
-            url: "/assets/projects/gallery-placeholder.svg", 
-            name: "Gaming_Montage_Thumbnail.jpg", 
-            type: 'image' 
+            url: "/assets/projects/videos/ai video doctor2.mp4", 
+            name: "ai video doctor.mp4", 
+            type: 'video' 
+        },
+        { 
+            url: "/assets/projects/videos/youtube logo.png", 
+            name: "My YouTube Channel", 
+            type: 'link', 
+            externalLink: "https://www.youtube.com/@nonu36" 
         }
     ],
     link: "#"

@@ -1,0 +1,8 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#F3F4F6"/>
+  <text x="50%" y="50%" font-family="sans-serif" font-size="24" fill="#4B5563" text-anchor="middle" dominant-baseline="middle">
+    Stealth Project
+    (Replace Me)
+  </text>
+  <rect x="20" y="20" width="760" height="560" fill="none" stroke="#4B5563" stroke-width="4" stroke-dasharray="10,10"/>
+</svg>
