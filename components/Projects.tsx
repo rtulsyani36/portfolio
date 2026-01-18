@@ -341,14 +341,14 @@ const Projects: React.FC = () => {
         </div>
 
         {/* Subtle Status Bar */}
-        <div className="mt-24 flex justify-center opacity-60 hover:opacity-100 transition-opacity duration-300">
-             <div className="flex items-center gap-6 px-4 py-2 bg-gray-100 dark:bg-white/10 rounded-full border border-gray-200 dark:border-white/5 backdrop-blur-sm text-[10px] font-mono text-gray-500 dark:text-gray-400">
+         <div className="mt-24 flex justify-center opacity-60 hover:opacity-100 transition-opacity duration-300">
+             <div className="flex flex-col md:flex-row items-center gap-2 md:gap-6 px-4 py-2 bg-gray-100 dark:bg-white/10 rounded-xl md:rounded-full border border-gray-200 dark:border-white/5 backdrop-blur-sm text-[10px] font-mono text-gray-500 dark:text-gray-400 text-center">
                  <div className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></div>
                     <span>System Online</span>
                  </div>
                  <span className="hidden md:inline text-gray-300 dark:text-gray-600">|</span>
-                 <span className="hidden md:inline">Fun Fact: This website is not a template, it is entirely unique and vibe coded by me using different AI tools.</span>
+                 <span className="block md:inline">Fun Fact: This website is not a template, it is entirely unique and vibe coded by me using different AI tools.</span>
              </div>
         </div>
 

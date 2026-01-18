@@ -20,6 +20,14 @@ const INITIAL_ITEMS: DesktopItem[] = [
   { id: '5', type: 'finder', x: 68, y: 65, zIndex: 15, rotation: 0 },
 ];
 
+const MOBILE_POSITIONS: Record<string, { x: number, y: number, zIndex: number }> = {
+  '1': { x: 50, y: 50, zIndex: 10 }, // Image (Center)
+  '4': { x: 20, y: 30, zIndex: 50 }, // Resume (Top Left) - Moved Up
+  '2': { x: 80, y: 30, zIndex: 20 }, // Music (Top Right) - Moved Up
+  '3': { x: 20, y: 70, zIndex: 30 }, // Dictionary (Bottom Left) - Moved Down
+  '5': { x: 80, y: 70, zIndex: 15 }, // Finder (Bottom Right) - Moved Down
+};
+
 // --- Sub-components for Mac Widgets (Defined OUTSIDE Hero to prevent re-renders) ---
 
   const MacWindowHeader = ({ title = "", dark = false }: { title?: string, dark?: boolean }) => (
@@ -214,6 +222,14 @@ const Hero: React.FC = () => {
   const [items, setItems] = useState<DesktopItem[]>(INITIAL_ITEMS);
   const containerRef = useRef<HTMLDivElement>(null);
   const dragItem = useRef<{ id: string; startX: number; startY: number; initialX: number; initialY: number } | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const bringToFront = (id: string) => {
     setItems((prev) => {
@@ -223,6 +239,7 @@ const Hero: React.FC = () => {
   };
 
   const handleMouseDown = (e: React.MouseEvent, id: string) => {
+    
     const target = e.target as HTMLElement;
     // Check for interactive elements. 
     // NOTE: This fallback check is good, but stopPropagation on the child elements is safer.
@@ -281,10 +298,10 @@ e.preventDefault();
   };
 
   return (
-    <section id="about" className="relative w-full min-h-screen overflow-hidden bg-paper pt-20">
+    <section id="about" className={`relative w-full bg-paper ${isMobile ? 'pt-12' : 'pt-20'}`}>
       
       {/* Background Name Watermark */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03] fixed">
           <h1 className="text-[20vw] font-display font-black tracking-tighter text-ink leading-none">
               ROHIT<br/>TULSYANI
           </h1>
@@ -293,25 +310,47 @@ e.preventDefault();
       {/* Interactive Desktop Area */}
       <div 
         ref={containerRef}
-        className="relative w-full h-screen cursor-default overflow-hidden"
+        // Mobile: Fixed height to remove gap, NO FLEX, use Absolute.
+        // Desktop: Full screen height.
+        className={`relative w-full overflow-hidden ${isMobile ? 'h-[600px]' : 'h-screen'}`}
       >
-        {/* Unified Layout for Mobile & Desktop - Scaled down for mobile to create overlay effect */}
-        <div className="absolute inset-0 md:transform-none transform scale-[0.65] origin-center h-full w-full">
-            {items.map((item) => (
+        {/* Unified Layout for Mobile & Desktop */}
+        <div className={`absolute inset-0 transform ${isMobile ? 'scale-[1.0] origin-top' : ''} w-full h-full`}>
+            {items.map((item) => {
+                // Determine position based on mode
+                const pos = isMobile && MOBILE_POSITIONS[item.id] ? MOBILE_POSITIONS[item.id] : item;
+                
+                // Scale Logic for Mobile - APPLIED VIA STYLE PROP TO PREVENT OVERRIDES
+                let scaleValue = 1;
+                if (isMobile) {
+                    if (item.type === 'music' || item.type === 'dictionary') {
+                        scaleValue = 0.4; // Updated to 0.4x per request
+                    } else if (item.type === 'resume' || item.type === 'finder') {
+                        scaleValue = 0.5; // Kept at 0.5x
+                    } else if (item.type === 'image') {
+                        scaleValue = 0.9; // Updated to 0.9x per request
+                    }
+                }
+
+                return (
             <div
-                key={item.id}
-                onMouseDown={(e) => handleMouseDown(e, item.id)}
-                className="absolute transition-transform duration-200 ease-out active:cursor-grabbing hover:cursor-grab"
-                style={{
-                left: `${item.x}%`,
-                top: `${item.y}%`,
-                transform: `translate(-50%, -50%) rotate(${item.rotation || 0}deg)`,
-                zIndex: item.zIndex,
-                }}
-            >
-                {renderItem(item.type)}
-            </div>
-            ))}
+                    key={item.id}
+                    onMouseDown={(e) => handleMouseDown(e, item.id)}
+                    className={`
+                        absolute transition-transform duration-200 ease-out active:cursor-grabbing hover:cursor-grab touch-none
+                    `}
+                    style={{
+                        left: `${pos.x}%`,
+                        top: `${pos.y}%`,
+                        // IMPORTANT: Scale is applied here to avoid CSS overriding the transform property
+                        transform: `translate(-50%, -50%) rotate(${item.rotation || 0}deg) scale(${scaleValue})`,
+                        zIndex: pos.zIndex,
+                    }}
+                >
+                    {renderItem(item.type)}
+                </div>
+                );
+            })}
         </div>
       </div>
 
