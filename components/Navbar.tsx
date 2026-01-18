@@ -105,12 +105,12 @@ const Navbar: React.FC = () => {
                   )}
               </button>
 
-              {/* Hamburger Button */}
-              <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="p-2">
+              {/* Hamburger Button (Opens Menu) */}
+              <button onClick={() => setIsMenuOpen(true)} className="p-2">
                   <div className="space-y-1.5 w-6">
-                      <span className={`block w-full h-0.5 bg-ink transition-transform duration-300 ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
-                      <span className={`block w-full h-0.5 bg-ink transition-opacity duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}></span>
-                      <span className={`block w-full h-0.5 bg-ink transition-transform duration-300 ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+                      <span className="block w-full h-0.5 bg-ink"></span>
+                      <span className="block w-full h-0.5 bg-ink"></span>
+                      <span className="block w-full h-0.5 bg-ink"></span>
                   </div>
               </button>
           </div>
@@ -119,8 +119,21 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Menu Overlay - Fixed Full Screen - High Z-Index to cover Hero Widgets */}
       {isMenuOpen && (
-          <div className="md:hidden fixed inset-0 z-[110] bg-paper/98 backdrop-blur-xl flex flex-col pt-24 px-6 pb-10 animate-fade-in h-screen overflow-y-auto">
-              <div className="flex flex-col gap-6 mt-4">
+          <div className="md:hidden fixed inset-0 z-[110] bg-paper/98 backdrop-blur-xl flex flex-col animate-fade-in h-screen overflow-y-auto">
+              {/* Close Button Header */}
+              <div className="flex justify-end items-center p-6 pb-2">
+                  <button 
+                      onClick={() => setIsMenuOpen(false)} 
+                      className="p-2 -mr-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10"
+                      aria-label="Close menu"
+                  >
+                    <svg className="w-8 h-8 text-ink" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+              </div>
+
+              <div className="flex flex-col gap-6 mt-2 px-6 pb-10 flex-1">
                 {['About', 'Experience', 'Skills', 'Work', 'Contact'].map((item) => (
                     <button
                     key={item}
@@ -130,7 +143,7 @@ const Navbar: React.FC = () => {
                     {item}
                     </button>
                 ))}
-              </div>
+              
               
               <div className="mt-auto pt-8">
                   <p className="font-mono text-xs opacity-50 mb-4">{time} • System Online</p>
@@ -140,6 +153,7 @@ const Navbar: React.FC = () => {
                   >
                     Launch AI Assistant
                   </button>
+                  </div>
               </div>
           </div>
       )}

@@ -28,7 +28,7 @@ const Experience: React.FC = () => {
         
         {/* Section Header */}
         <div className="text-center mb-12">
-            <h2 className="font-display font-black text-5xl md:text-6xl uppercase tracking-tighter text-ink mb-2">
+            <h2 className="font-display font-black text-3xl md:text-6xl uppercase tracking-tighter text-ink mb-2">
                 Experience
             </h2>
             <p className="font-mono text-xs text-gray-500 uppercase tracking-widest">
