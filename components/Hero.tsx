@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
+
 type WindowType = 'music' | 'dictionary' | 'resume' | 'finder' | 'image' | 'selection';
 
 interface DesktopItem {
@@ -19,59 +20,7 @@ const INITIAL_ITEMS: DesktopItem[] = [
   { id: '5', type: 'finder', x: 68, y: 65, zIndex: 15, rotation: 0 },
 ];
 
-const Hero: React.FC = () => {
-  const [items, setItems] = useState<DesktopItem[]>(INITIAL_ITEMS);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const dragItem = useRef<{ id: string; startX: number; startY: number; initialX: number; initialY: number } | null>(null);
-
-  const bringToFront = (id: string) => {
-    setItems((prev) => {
-      const maxZ = Math.max(...prev.map((i) => i.zIndex));
-      return prev.map((item) => (item.id === id ? { ...item, zIndex: maxZ + 1 } : item));
-    });
-  };
-
-  const handleMouseDown = (e: React.MouseEvent, id: string) => {
-    e.preventDefault();
-    bringToFront(id);
-    const item = items.find((i) => i.id === id);
-    if (!item || !containerRef.current) return;
-
-    dragItem.current = {
-      id,
-      startX: e.clientX,
-      startY: e.clientY,
-      initialX: item.x,
-      initialY: item.y,
-    };
-
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
-  };
-
-  const handleMouseMove = (e: MouseEvent) => {
-    if (!dragItem.current || !containerRef.current) return;
-
-    const { clientWidth, clientHeight } = containerRef.current;
-    const deltaX = ((e.clientX - dragItem.current.startX) / clientWidth) * 100;
-    const deltaY = ((e.clientY - dragItem.current.startY) / clientHeight) * 100;
-
-    setItems((prev) =>
-      prev.map((item) =>
-        item.id === dragItem.current?.id
-          ? { ...item, x: dragItem.current.initialX + deltaX, y: dragItem.current.initialY + deltaY }
-          : item
-      )
-    );
-  };
-
-  const handleMouseUp = () => {
-    dragItem.current = null;
-    document.removeEventListener('mousemove', handleMouseMove);
-    document.removeEventListener('mouseup', handleMouseUp);
-  };
-
-  // --- Sub-components for Mac Widgets ---
+// --- Sub-components for Mac Widgets (Defined OUTSIDE Hero to prevent re-renders) ---
 
   const MacWindowHeader = ({ title = "", dark = false }: { title?: string, dark?: boolean }) => (
     <div className={`h-8 flex items-center px-4 space-x-2 rounded-t-xl ${dark ? 'bg-black/10 dark:bg-white/10' : 'bg-gray-100/50 dark:bg-white/10'} backdrop-blur-md border-b border-gray-300/30 dark:border-white/5`}>
@@ -130,7 +79,11 @@ const Hero: React.FC = () => {
     </div>
   );
 
-  const ResumeWindow = () => (
+  const ResumeWindow = () => {
+  // Replace this with your actual Google Drive file link
+  const RESUME_LINK = "https://drive.google.com/file/d/1v6tKg8ZQylj_A2Ho3exehnZE3mj8sPUK/view?usp=sharing";
+
+  return (
     <div className="w-[280px] glass-panel dark:bg-[#1c1c1e]/90 dark:border-white/10 rounded-xl shadow-deep overflow-hidden transition-colors duration-300">
         <MacWindowHeader title="AirDrop" />
         <div className="p-5 flex flex-col items-center">
@@ -155,21 +108,26 @@ const Hero: React.FC = () => {
                 </div>
                 
             <div className="grid grid-cols-2 gap-2 w-full">
-                 <button className="px-3 py-2 bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 text-xs font-semibold rounded-lg hover:bg-gray-200 dark:hover:bg-white/10 transition-colors">
+                 <button 
+                  onMouseDown={(e) => e.stopPropagation()} 
+                  className="px-3 py-2 bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 text-xs font-semibold rounded-lg hover:bg-gray-200 dark:hover:bg-white/10 transition-colors"
+                  > 
                     Decline
                  </button>
-                 <a 
-                    href="/assets/Rohit's resume.pdf" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3 py-2 bg-mac-blue text-white text-xs font-semibold rounded-lg hover:bg-blue-600 transition-colors text-center shadow-sm flex items-center justify-center"
-                 >
+                  {/* Use strict Anchor tag with stopPropagation to ensure dragging logic doesn't capture the click */}
+               <a 
+                  href={RESUME_LINK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onMouseDown={(e) => e.stopPropagation()} 
+                  className="px-3 py-2 bg-mac-blue text-white text-xs font-semibold rounded-lg hover:bg-blue-600 transition-colors text-center shadow-sm flex items-center justify-center"
+               >
                     Accept
                  </a>
             </div>
         </div>
     </div>
-  );
+  )};
 
   const FinderWindow = () => (
     <div className="w-[200px] glass-panel dark:bg-[#1c1c1e]/90 dark:border-white/10 rounded-xl shadow-deep overflow-hidden transition-colors duration-300">
@@ -249,6 +207,68 @@ const MainImage = () => {
      </div>
   )};
 
+
+// --- Main Hero Component ---
+
+const Hero: React.FC = () => {
+  const [items, setItems] = useState<DesktopItem[]>(INITIAL_ITEMS);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const dragItem = useRef<{ id: string; startX: number; startY: number; initialX: number; initialY: number } | null>(null);
+
+  const bringToFront = (id: string) => {
+    setItems((prev) => {
+      const maxZ = Math.max(...prev.map((i) => i.zIndex));
+      return prev.map((item) => (item.id === id ? { ...item, zIndex: maxZ + 1 } : item));
+    });
+  };
+
+  const handleMouseDown = (e: React.MouseEvent, id: string) => {
+    const target = e.target as HTMLElement;
+    // Check for interactive elements. 
+    // NOTE: This fallback check is good, but stopPropagation on the child elements is safer.
+    if (target.closest('button, a, input, [role="button"]')) {
+      bringToFront(id);
+      return;
+    }
+e.preventDefault();
+    bringToFront(id);
+    const item = items.find((i) => i.id === id);
+    if (!item || !containerRef.current) return;
+
+    dragItem.current = {
+      id,
+      startX: e.clientX,
+      startY: e.clientY,
+      initialX: item.x,
+      initialY: item.y,
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+  };
+
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!dragItem.current || !containerRef.current) return;
+
+    const { clientWidth, clientHeight } = containerRef.current;
+    const deltaX = ((e.clientX - dragItem.current.startX) / clientWidth) * 100;
+    const deltaY = ((e.clientY - dragItem.current.startY) / clientHeight) * 100;
+
+    setItems((prev) =>
+      prev.map((item) =>
+        item.id === dragItem.current?.id
+    ? { ...item, x: dragItem.current.initialX + deltaX, y: dragItem.current.initialY + deltaY }
+          : item
+      )
+    );
+  };
+
+  const handleMouseUp = () => {
+    dragItem.current = null;
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+  };
+
   const renderItem = (type: WindowType) => {
     switch (type) {
       case 'music': return <MusicPlayer />;
@@ -281,7 +301,7 @@ const MainImage = () => {
             <div
                 key={item.id}
                 onMouseDown={(e) => handleMouseDown(e, item.id)}
-                className="absolute transition-transform duration-200 ease-out active:scale-105 active:cursor-grabbing hover:cursor-grab"
+                className="absolute transition-transform duration-200 ease-out active:cursor-grabbing hover:cursor-grab"
                 style={{
                 left: `${item.x}%`,
                 top: `${item.y}%`,
