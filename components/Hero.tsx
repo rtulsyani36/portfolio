@@ -21,7 +21,7 @@ const INITIAL_ITEMS: DesktopItem[] = [
 ];
 
 const MOBILE_POSITIONS: Record<string, { x: number, y: number, zIndex: number }> = {
-  '1': { x: 50, y: 50, zIndex: 10 }, // Image (Center)
+  '1': { x: 40, y: 50, zIndex: 10 }, // Image (Center)
   '4': { x: 20, y: 30, zIndex: 50 }, // Resume (Top Left) - Moved Up
   '2': { x: 80, y: 30, zIndex: 20 }, // Music (Top Right) - Moved Up
   '3': { x: 20, y: 70, zIndex: 30 }, // Dictionary (Bottom Left) - Moved Down
@@ -328,7 +328,7 @@ e.preventDefault();
                     } else if (item.type === 'resume' || item.type === 'finder') {
                         scaleValue = 0.5; // Kept at 0.5x
                     } else if (item.type === 'image') {
-                        scaleValue = 0.9; // Updated to 0.9x per request
+                        scaleValue = 0.7; // Updated to 0.9x per request
                     }
                 }
 
