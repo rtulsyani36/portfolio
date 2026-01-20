@@ -1,5 +1,6 @@
 import React from 'react';
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Experience from './components/Experience';
@@ -14,6 +15,7 @@ function App() {
       <Navbar />
       <main>
         <Analytics /> 
+        <SpeedInsights />
         <Hero />
         <Experience />
         <Skills />
