@@ -1,4 +1,5 @@
 import React from 'react';
+import { Analytics } from "@vercel/analytics/next"
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Experience from './components/Experience';
@@ -12,13 +13,14 @@ function App() {
     <div className="min-h-screen bg-paper text-ink font-sans selection:bg-hyper-orange selection:text-white">
       <Navbar />
       <main>
+        <Analytics /> 
         <Hero />
         <Experience />
         <Skills />
         <Projects />
         <AIChat />
       </main>
-      <Footer />
+      <Footer />   
     </div>
   );
 }
