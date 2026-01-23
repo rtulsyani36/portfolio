@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 const Navbar: React.FC = () => {
-  const [time, setTime] = useState('');
+  // CLS FIX: Initialized with a placeholder to prevent width change from '' to 'HH:MM'
+  const [time, setTime] = useState('00:00');
   const [isDark, setIsDark] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -59,7 +60,7 @@ const Navbar: React.FC = () => {
               </button>
             ))}
             
-            <span className="font-mono text-[10px] lg:text-xs opacity-60 ml-2 lg:ml-4 border-l border-ink/20 pl-2 lg:pl-4">{time}</span>
+            <span className="font-mono text-[10px] lg:text-xs opacity-60 ml-2 lg:ml-4 border-l border-ink/20 pl-2 lg:pl-4 min-w-[32px] text-center">{time}</span>
 
             {/* Dark Mode Toggle */}
             <button 

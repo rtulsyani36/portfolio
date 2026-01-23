@@ -52,7 +52,9 @@ const MOBILE_POSITIONS: Record<string, { x: number, y: number, zIndex: number }>
                 src="/assets/kendrick damn.webp" 
                 alt="Album Art" 
                 className="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-700" 
-             />
+                width="128"
+                height="128"
+              />
         </div>
         <h3 className="font-sans font-bold text-lg text-black dark:text-white">DNA.</h3>
         <p className="font-sans text-sm text-gray-500 dark:text-gray-400 mb-6">Kendrick Lamar</p>
@@ -199,7 +201,9 @@ const MainImage = () => {
                 src="/assets/rohit_doodle_v1.webp"
                 alt="Rohit Tulsyani" 
                 className="w-full h-full object-cover filter contrast-125 brightness-90 grayscale-[20%]" 
-             />
+                width="400"
+                height="500"
+              />
              <div className="absolute bottom-4 left-4 bg-black/60 dark:bg-black/80 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-mono">
                 rohit_tulsyani.png
              </div>
@@ -222,11 +226,18 @@ const Hero: React.FC = () => {
   const [items, setItems] = useState<DesktopItem[]>(INITIAL_ITEMS);
   const containerRef = useRef<HTMLDivElement>(null);
   const dragItem = useRef<{ id: string; startX: number; startY: number; initialX: number; initialY: number } | null>(null);
-  const [isMobile, setIsMobile] = useState(false);
+  
+  // FIX FOR CLS: Initialize state based on window width immediately to prevent jump
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== 'undefined') {
+        return window.innerWidth < 768;
+    }
+    return false; // Default for SSR (if applicable), though this is client-only
+  });
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
+    // Remove the initial checkMobile() call since we initialize in useState
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);

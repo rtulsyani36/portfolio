@@ -111,6 +111,16 @@
       ::-webkit-scrollbar-thumb:hover {
         background: #8E8E93;
       }
+        
+      /* Skeleton Loader Styles - Critical CSS */
+      .sk-loader { display: flex; flex-direction: column; height: 100vh; width: 100%; padding: 2rem; box-sizing: border-box; }
+      .sk-nav { display: flex; justify-content: space-between; margin-bottom: 4rem; }
+      .sk-logo { width: 150px; height: 20px; background: #e0e0e0; border-radius: 4px; }
+      .sk-menu { display: flex; gap: 20px; }
+      .sk-link { width: 60px; height: 20px; background: #e0e0e0; border-radius: 4px; }
+      .sk-hero { display: flex; justify-content: center; align-items: center; flex: 1; }
+      .sk-card { width: 300px; height: 400px; background: #e0e0e0; border-radius: 12px; }
+      .dark .sk-logo, .dark .sk-link, .dark .sk-card { background: #333; }
     </style>
   <script type="importmap">
 {
@@ -126,7 +136,22 @@
 </head>
   <body>
     <div class="bg-texture"></div>
-    <div id="root"></div>
+    <div id="root">
+        <!-- Structural Skeleton to Improve FCP -->
+        <div class="sk-loader">
+            <div class="sk-nav">
+                <div class="sk-logo"></div>
+                <div class="sk-menu">
+                    <div class="sk-link"></div>
+                    <div class="sk-link"></div>
+                    <div class="sk-link"></div>
+                </div>
+            </div>
+            <div class="sk-hero">
+                <div class="sk-card"></div>
+            </div>
+        </div>
+    </div>
   <script type="module" src="/index.tsx"></script>
 </body>
 </html>
