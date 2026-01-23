@@ -173,7 +173,7 @@ const MainImage = () => {
      const paddingSize = 24; 
     
      return (
-     <div className="w-[290px] md:w-[400px] aspect-[4/5] relative group">
+     <div className="w-[260px] md:w-[400px] aspect-[4/5] relative group">
         
         {/* Selection Rectangle Effect - Behind Image */}
         <div 
