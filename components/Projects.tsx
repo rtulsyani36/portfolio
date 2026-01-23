@@ -86,7 +86,7 @@ const FinderWindow: React.FC<{
             {/* Window */}
             <div 
                 className={`
-                    relative w-full max-w-5xl h-[80vh] bg-[#f5f5f7]/90 dark:bg-[#1e1e1e]/90 backdrop-blur-2xl rounded-xl shadow-2xl border border-white/40 dark:border-white/10 flex flex-col overflow-hidden 
+                    relative w-full max-w-5xl h-[80vh] bg-[#f5f5f7]/95 dark:bg-[#1e1e1e]/95 backdrop-blur-xl rounded-xl shadow-2xl border border-white/40 dark:border-white/10 flex flex-col overflow-hidden 
                     ${isClosing ? 'animate-genie-exit' : 'animate-scale-up-center'}
                 `}
                 style={isClosing ? exitStyle : {}}
@@ -232,7 +232,11 @@ const FinderWindow: React.FC<{
             {/* Preview Modal (Image, Video, or YouTube) */}
             {previewFile && (
                 <div className="absolute inset-0 z-[110] flex items-center justify-center p-4 md:p-8 animate-fade-in-fast pointer-events-auto">
-                    <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setPreviewFile(null)}></div>
+                    {/* OPTIMIZED: Replaced expensive 'backdrop-blur-sm' with high-opacity 'bg-black/95'.
+                        This prevents the browser from trying to blur the complex Finder window + Main site underneath 
+                        every time the video updates a frame, which fixes the YouTube lag.
+                    */}
+                    <div className="absolute inset-0 bg-black/95" onClick={() => setPreviewFile(null)}></div>
                     <div className={`
                         relative bg-[#2d2d2d] rounded-lg shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] flex flex-col overflow-hidden animate-scale-up-center border border-white/10 
                         ${(previewFile.type === 'video' || previewFile.type === 'youtube') 
@@ -275,6 +279,7 @@ const FinderWindow: React.FC<{
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                                     allowFullScreen
                                     className="w-full h-full shadow-2xl"
+                                    loading="lazy"
                                 ></iframe>
                             ) : (
                                 <img 

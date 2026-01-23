@@ -37,7 +37,8 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 w-full z-[100] px-6 py-4 bg-white/50 dark:bg-black/50 backdrop-blur-xl border-b border-white/30 dark:border-white/10 text-ink transition-all duration-300 shadow-sm">
+    
+      <nav className="fixed top-0 left-0 right-0 z-[100] px-6 py-4 bg-white/50 dark:bg-black/50 backdrop-blur-xl border-b border-white/30 dark:border-white/10 text-ink transition-all duration-300 shadow-sm">
         <div className="flex justify-between items-center max-w-7xl mx-auto">
           
           {/* Logo - Premium Minimalist */}
@@ -120,7 +121,7 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Menu Overlay - Fixed Full Screen - High Z-Index to cover Hero Widgets */}
       {isMenuOpen && (
-          <div className="md:hidden fixed inset-0 z-[110] bg-paper/98 backdrop-blur-xl flex flex-col animate-fade-in h-screen overflow-y-auto">
+          <div className="md:hidden fixed inset-0 z-[110] bg-paper/98 backdrop-blur-xl flex flex-col animate-fade-in h-screen overflow-y-auto w-full">
               {/* Close Button Header */}
               <div className="flex justify-end items-center p-6 pb-2">
                   <button 

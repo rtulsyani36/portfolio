@@ -11,9 +11,9 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="min-h-screen bg-paper text-ink font-sans selection:bg-hyper-orange selection:text-white">
+    <div className="min-h-screen bg-paper text-ink font-sans selection:bg-hyper-orange selection:text-white overflow-x-hidden w-full relative">
       <Navbar />
-      <main>
+      <main className="w-full overflow-x-hidden">
         <Analytics /> 
         <SpeedInsights />
         <Hero />

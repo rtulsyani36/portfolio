@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, memo } from 'react';
 
 
 type WindowType = 'music' | 'dictionary' | 'resume' | 'finder' | 'image' | 'selection';
@@ -22,10 +22,10 @@ const INITIAL_ITEMS: DesktopItem[] = [
 
 const MOBILE_POSITIONS: Record<string, { x: number, y: number, zIndex: number }> = {
   '1': { x: 40, y: 50, zIndex: 10 }, // Image (Center)
-  '4': { x: 20, y: 30, zIndex: 50 }, // Resume (Top Left) - Moved Up
-  '2': { x: 80, y: 30, zIndex: 20 }, // Music (Top Right) - Moved Up
-  '3': { x: 20, y: 70, zIndex: 30 }, // Dictionary (Bottom Left) - Moved Down
-  '5': { x: 80, y: 70, zIndex: 15 }, // Finder (Bottom Right) - Moved Down
+  '4': { x: 20, y: 15, zIndex: 50 }, // Resume (Top Left) - Moved Up
+  '2': { x: 93, y: 22, zIndex: 20 }, // Music (Top Right) - Moved Up
+  '3': { x: 17, y: 73, zIndex: 30 }, // Dictionary (Bottom Left) - Moved Down
+  '5': { x: 86, y: 79, zIndex: 15 }, // Finder (Bottom Right) - Moved Down
 };
 
 // --- Sub-components for Mac Widgets (Defined OUTSIDE Hero to prevent re-renders) ---
@@ -41,7 +41,7 @@ const MOBILE_POSITIONS: Record<string, { x: number, y: number, zIndex: number }>
     </div>
   );
 
-  const MusicPlayer = () => (
+  const MusicPlayer = memo(() => (
     <div className="w-[320px] glass-panel dark:bg-[#1c1c1e]/90 dark:border-white/10 rounded-2xl shadow-deep overflow-hidden transition-colors duration-300">
        {/* Album Art Blur Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 opacity-20 dark:opacity-10"></div>
@@ -76,9 +76,9 @@ const MOBILE_POSITIONS: Record<string, { x: number, y: number, zIndex: number }>
         </div>
       </div>
     </div>
-  );
+  ));
 
-  const DictionaryCard = () => (
+  const DictionaryCard = memo(() => (
     <div className="w-[300px] bg-white/90 dark:bg-[#1c1c1e]/90 backdrop-filter backdrop-blur-xl rounded-xl shadow-glass border border-white dark:border-white/10 p-6 font-serif transition-colors duration-300">
       <h3 className="text-3xl font-bold text-black dark:text-white mb-1">strat·e·gist</h3>
       <div className="text-sm text-gray-500 dark:text-gray-400 mb-4 font-sans italic">/ˈstratəjəst/ • noun</div>
@@ -87,9 +87,9 @@ const MOBILE_POSITIONS: Record<string, { x: number, y: number, zIndex: number }>
       </p>
       <p className="text-xs text-gray-400 mt-4 italic">"Rohit is the strategist you need."</p>
     </div>
-  );
+  ));
 
-  const ResumeWindow = () => {
+  const ResumeWindow = memo(() => {
   // Replace this with your actual Google Drive file link
   const RESUME_LINK = "https://drive.google.com/file/d/1v6tKg8ZQylj_A2Ho3exehnZE3mj8sPUK/view?usp=sharing";
 
@@ -137,9 +137,9 @@ const MOBILE_POSITIONS: Record<string, { x: number, y: number, zIndex: number }>
             </div>
         </div>
     </div>
-  )};
+  )});
 
-  const FinderWindow = () => (
+  const FinderWindow = memo(() => (
     <div className="w-[200px] glass-panel dark:bg-[#1c1c1e]/90 dark:border-white/10 rounded-xl shadow-deep overflow-hidden transition-colors duration-300">
         <MacWindowHeader title="Skills" />
         <div className="p-4 grid grid-cols-2 gap-4">
@@ -165,15 +165,15 @@ const MOBILE_POSITIONS: Record<string, { x: number, y: number, zIndex: number }>
             </div>
         </div>
     </div>
-  );
+  ));
 
-const MainImage = () => {
+const MainImage = memo(() => {
      // Customize the padding size of the blue selection box (in pixels)
      // Increase this value to make the rectangle larger.
      const paddingSize = 24; 
     
      return (
-     <div className="w-[260px] md:w-[400px] aspect-[4/5] relative group">
+     <div className="w-[350px] md:w-[400px] aspect-[4/5] relative group">
         
         {/* Selection Rectangle Effect - Behind Image */}
         <div 
@@ -217,7 +217,7 @@ const MainImage = () => {
              <span className="bg-mac-blue text-white text-[10px] px-1.5 py-0.5 rounded ml-4">Rohit</span>
         </div>
      </div>
-  )};
+  )});
 
 
 // --- Main Hero Component ---
@@ -321,9 +321,8 @@ e.preventDefault();
       {/* Interactive Desktop Area */}
       <div 
         ref={containerRef}
-        // Mobile: Fixed height to remove gap, NO FLEX, use Absolute.
-        // Desktop: Full screen height.
-        className={`relative w-full overflow-hidden ${isMobile ? 'h-[600px]' : 'h-screen'}`}
+        // CSS Height Control for CLS prevention: h-[600px] on mobile, h-screen on desktop
+        className="relative w-full overflow-hidden h-[600px] md:h-screen"
       >
         {/* Unified Layout for Mobile & Desktop */}
         <div className={`absolute inset-0 transform ${isMobile ? 'scale-[1.0] origin-top' : ''} w-full h-full`}>

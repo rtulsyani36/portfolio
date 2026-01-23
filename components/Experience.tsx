@@ -16,12 +16,12 @@ const Experience: React.FC = () => {
   };
 
   return (
-    <section id="experience" className="py-24 md:py-32 relative bg-paper flex flex-col items-center justify-center min-h-[80vh]">
+    <section id="experience" className="py-24 md:py-32 relative bg-paper flex flex-col items-center justify-center min-h-[80vh] overflow-hidden w-full">
       
-      {/* Background Ambience */}
+      {/* Background Ambience - OPTIMIZED: Replaced expensive 'blur-3xl' + 'mix-blend' with performant radial gradients */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-0 w-[800px] h-[800px] bg-blue-100/40 rounded-full blur-3xl -translate-x-1/2 mix-blend-multiply dark:bg-blue-900/20"></div>
-        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-purple-100/40 rounded-full blur-3xl translate-x-1/4 mix-blend-multiply dark:bg-purple-900/20"></div>
+        <div className="absolute top-1/4 left-0 w-[800px] h-[800px] -translate-x-1/2 bg-[radial-gradient(closest-side,rgba(219,234,254,0.5),transparent)] dark:bg-[radial-gradient(closest-side,rgba(30,58,138,0.25),transparent)]"></div>
+        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] translate-x-1/4 bg-[radial-gradient(closest-side,rgba(243,232,255,0.5),transparent)] dark:bg-[radial-gradient(closest-side,rgba(88,28,135,0.25),transparent)]"></div>
       </div>
 
       <div className="max-w-7xl w-full px-4 md:px-6 relative z-10">
@@ -52,7 +52,7 @@ const Experience: React.FC = () => {
 
                 {/* Search Bar Visual */}
                 <div className="p-3 hidden md:block">
-                     <div className="bg-white/50 dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-md px-3 py-1.5 flex items-center gap-2 text-gray-400 text-sm">
+                     <div className="bg-white dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-md px-3 py-1.5 flex items-center gap-2 text-gray-400 text-sm">
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                         <span>Search</span>
                      </div>
@@ -67,25 +67,24 @@ const Experience: React.FC = () => {
                                 key={exp.id}
                                 onClick={() => setSelectedId(exp.id)}
                                 className={`
-                                    flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap md:whitespace-normal
+                                    flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-150 whitespace-nowrap md:whitespace-normal
                                     ${isActive 
-                                        ? 'bg-mac-blue text-white shadow-md' 
+                                        ? 'bg-mac-blue text-white shadow-sm' 
                                         : 'text-gray-600 dark:text-gray-400 hover:bg-black/5 dark:hover:bg-white/5'
                                     }
                                 `}
                             >
-                                <span className={`text-lg ${isActive ? 'scale-110' : 'opacity-70'} transition-transform`}>
+                                <span className={`text-lg ${isActive ? 'scale-110' : 'opacity-70'} transition-transform duration-200`}>
                                     {getIcon(exp.company)}
                                 </span>
                                 <span className="truncate">{exp.company}</span>
-                                {isActive && <span className="hidden md:block ml-auto text-[10px] opacity-70">›</span>}
                             </button>
                         );
                     })}
                 </div>
             </div>
 
-            {/* Main Content Pane */}
+             {/* Main Content Pane */}
             <div className="flex-1 flex flex-col bg-white dark:bg-[#111] relative">
                 
                 {/* Content Header */}
